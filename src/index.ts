@@ -1,11 +1,9 @@
 import type { User, Course, ApiResponse, UserRole } from '../types';
 
-// Generic: get an item by id
 function getById<T extends { id: string | number }>(items: T[], id: string | number): T | undefined {
   return items.find(item => item.id === id);
 }
 
-// Example data
 const mockUsers: User[] = [
   { id: 1, name: 'Marcus', email: 'marcus@dlsl.edu.ph', role: 'STUDENT' as UserRole },
   { id: 2, name: 'Professor', email: 'prof@dlsl.edu.ph', role: 'TEACHER' as UserRole }
