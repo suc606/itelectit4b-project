@@ -1,4 +1,13 @@
-function getUser(id: number) {
+interface user {
+id: number;
+name: string;
+email: string;
+role: string;
+isActive: boolean;
+score: number;
+}
+
+function getUser(id: number): user {
 return {
 id: id,
 name: "Juan dela Cruz",
@@ -8,7 +17,7 @@ isActive: true,
 score: 95.5,
 };
 }
-function calculateGrade(score: number, maxScore: number) {
+function calculateGrade(score: number, maxScore: number): string {
 const percentage = (score / maxScore) * 100;
 if (percentage >= 90) return "A";
 if (percentage >= 80) return "B";

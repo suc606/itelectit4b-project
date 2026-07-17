@@ -1,68 +1,47 @@
-// ===== INTERFACES =====
-// An interface defines the SHAPE of an object -- what fields it must have.
+// ==========================================
+// 1. PART 1 INTERFACES (Ensure these exist)
+// ==========================================
 export interface User {
-id: number;
-name: string;
-email: string;
-role: "student" | "admin" | "instructor"; // only these values
-isActive: boolean;
+    id: number;
+    name: string;
+    email: string;
+    role: UserRole; // Using the enum defined below
 }
+
 export interface Course {
-code: string;
-title: string;
-units: number;
-semester: string;
+    id: string;
+    title: string;
+    description: string;
 }
+
 export interface Submission {
-id: number;
-studentId: number;
-courseCode: string;
-repoUrl: string;
-submittedAt: Date;
-score?: number; // ? means this field is optional
+    id: number;
+    courseId: string;
+    studentId: number;
+    grade?: number;
 }
 
-// ===== TYPE ALIASES =====
-// A type alias gives a name to any type -- primitives, unions, functions, objects
-// Alias for a union type (string OR number)
-export type ID = number | string;
-// Alias for an object shape
-export type Coordinate = {
-x: number;
-y: number;
-};
-// Alias for a function signature
-export type Formatter = (value: number) => string;
-// Using them
-const studentId: ID = "S2026-001";
-const position: Coordinate = { x: 10, y: 20 };
-const formatScore: Formatter = (value) => `${value}%`;
-console.log(studentId); // S2026-001
-console.log(formatScore(95.5)); // 95.5%
+// ==========================================
+// 2. ADD ENUM (At least ONE)
+// ==========================================
+export type UserRole = "ADMIN" | "TEACHER" | "STUDENT";
 
-// ===== UNION TYPES -- One OR the other =====
 export type StringOrNumber = string | number;
-export type Status = "pending" | "active" | "inactive"; // literal union
-// Function that accepts a union type
-function printId(id: StringOrNumber): void {
-console.log(`ID: ${id}`);
-}
-printId(101);
-print
-Id("S2026-001");
-// ===== INTERSECTION TYPES -- combines ALL properties =====
-// StudentWithCourse must have all User fields AND enrolledCourse AND gpa
-export type StudentWithCourse = User & {
-enrolledCourse: Course;
-gpa: number;
-};
-const topStudent: StudentWithCourse = {
-id: 1, name: "Maria Santos", email: "m@example.com",
-role: "student", isActive: true,
-enrolledCourse: { code: "ITELECT4", title: "IT Elective 4", units: 3, semester: "1st" },
-gpa: 1.25,
-};
-function Id(arg0: string) {
-    throw new Error("Function not implemented.");
+
+// ==========================================
+// 3. ADD GENERIC INTERFACE ApiResponse<T>
+// ==========================================
+export interface ApiResponse<T> {
+    status: "success" | "error";
+    data: T;
+    message?: string;
 }
 
+// ==========================================
+// 4. ADD AT LEAST TWO UTILITY TYPES
+// ==========================================
+// Use 1: Partial<T> (Useful for updating data)
+export type UpdateUserDto = Partial<User>;
+
+// Use 2: Omit<T, K> (Useful for creating new entries without an ID yet)
+export type NewSubmissionDto = Omit<Submission, "id">;
