@@ -1,28 +1,133 @@
-import type { User, Course, ApiResponse, UserRole } from '../types';
+import {
+  UserRole,
+  BookingStatus,
+  getById,
+  getFirst,
+  type User,
+  type Course,
+  type Submission,
+  type TutoringSession,
+  type Booking,
+  type ApiResponse,
+  type UpdateUserDto,
+  type CreateBookingDto,
+  type UserSummaryDto,
+  type BookingDictionary,
+} from '../types';
 
-// Generic: get an item by id
-function getById<T extends { id: string | number }>(items: T[], id: string | number): T | undefined {
-  return items.find(item => item.id === id);
-}
-
-// Example data
+// Demonstration of Part 1 & Peer Tutoring Platform entities
 const mockUsers: User[] = [
-  { id: 1, name: 'Marcus', email: 'marcus@dlsl.edu.ph', role: 'STUDENT' as UserRole },
-  { id: 2, name: 'Professor', email: 'prof@dlsl.edu.ph', role: 'TEACHER' as UserRole }
+  {
+    id: 1,
+    name: 'Marcus Rodillo',
+    email: 'marcus@dlsl.edu.ph',
+    role: UserRole.TUTOR,
+    subjectSpecialization: ['Computer Science', 'TypeScript', 'React'],
+    bio: 'Senior CS student specializing in Web Development.',
+  },
+  {
+    id: 2,
+    name: 'Alex Santos',
+    email: 'alex@dlsl.edu.ph',
+    role: UserRole.TUTEE,
+  },
+  {
+    id: 3,
+    name: 'Admin User',
+    email: 'admin@dlsl.edu.ph',
+    role: UserRole.ADMIN,
+  },
 ];
 
+const mockCourses: Course[] = [
+  {
+    id: 'ITELECT4',
+    title: 'IT Elective 4: Advanced Web Development',
+    description: '3 units - 1st Semester 2026-2027',
+  },
+];
+
+const mockSubmissions: Submission[] = [
+  {
+    id: 101,
+    courseId: 'ITELECT4',
+    studentId: 2,
+    grade: 95,
+  },
+];
+
+const mockSessions: TutoringSession[] = [
+  {
+    id: 'SESS-001',
+    tutorId: 1,
+    courseCode: 'ITELECT4',
+    topic: 'TypeScript Generics & Utility Types',
+    description: 'Comprehensive review of TypeScript type system basics and advanced generics.',
+    schedule: '2026-08-01 14:00 - 16:00',
+    maxTutees: 5,
+  },
+];
+
+const mockBookings: Booking[] = [
+  {
+    id: 501,
+    sessionId: 'SESS-001',
+    tuteeId: 2,
+    tutorId: 1,
+    status: BookingStatus.CONFIRMED,
+    requestedAt: '2026-07-25T07:50:00Z',
+    notes: 'Need help understanding Partial<T> and Omit<T, K>.',
+  },
+];
+
+// 1. Generic function demonstration: getById
 const foundUser = getById(mockUsers, 1);
-console.log('Found User:', foundUser);
+console.log('Found User (getById):', foundUser);
 
-const response: ApiResponse<User> = {
+// 2. Generic function demonstration: getFirst
+const firstSession = getFirst(mockSessions);
+console.log('First Session (getFirst):', firstSession);
+
+// 3. Generic Interface demonstration: ApiResponse<T>
+const userApiResponse: ApiResponse<User> = {
   status: 'success',
-  data: mockUsers[0]!
+  data: mockUsers[0],
+  message: 'User retrieved successfully',
 };
-console.log('API Response sample:', response);
+console.log('API Response:', userApiResponse);
 
-const course: Course = {
-  id: 'ITELECT4',
-  title: 'IT Elective 4',
-  description: '3 units - 1st Semester 2026-2027'
+const bookingsApiResponse: ApiResponse<Booking[]> = {
+  status: 'success',
+  data: mockBookings,
 };
-console.log('Course:', course);
+console.log('Bookings API Response:', bookingsApiResponse);
+
+// 4. Utility Type usage examples
+const userUpdate: UpdateUserDto = {
+  bio: 'Updated bio: Peer tutor for CS & IT courses.',
+};
+console.log('UpdateUserDto (Partial<User>):', userUpdate);
+
+const newBooking: CreateBookingDto = {
+  sessionId: 'SESS-001',
+  tuteeId: 2,
+  tutorId: 1,
+  status: BookingStatus.REQUESTED,
+  requestedAt: new Date().toISOString(),
+  notes: 'Requesting confirmation for upcoming session.',
+};
+console.log('CreateBookingDto (Omit<Booking, "id">):', newBooking);
+
+const userSummary: UserSummaryDto = {
+  id: mockUsers[0].id,
+  name: mockUsers[0].name,
+  role: mockUsers[0].role,
+};
+console.log('UserSummaryDto (Pick<User, ...>):', userSummary);
+
+const bookingMap: BookingDictionary = {
+  501: mockBookings[0],
+};
+console.log('BookingDictionary (Record<number, Booking>):', bookingMap);
+
+console.log('All entities, enums, generics, and utility types initialized successfully!');
