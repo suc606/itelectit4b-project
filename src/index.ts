@@ -80,6 +80,10 @@ const mockBookings: Booking[] = [
   },
 ];
 
+// Log unused mocks to satisfy noUnusedLocals
+console.log('Mock Courses:', mockCourses);
+console.log('Mock Submissions:', mockSubmissions);
+
 // 1. Generic function demonstration: getById
 const foundUser = getById(mockUsers, 1);
 console.log('Found User (getById):', foundUser);

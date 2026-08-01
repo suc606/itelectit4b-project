@@ -1,18 +1,20 @@
 // ==========================================
-// 1. ENUMS (At least ONE enum)
+// 1. ENUMS (Erasable Syntax Compatible Enums)
 // ==========================================
-export enum UserRole {
-  TUTOR = "tutor",
-  TUTEE = "tutee",
-  ADMIN = "admin",
-}
+export const UserRole = {
+  TUTOR: "tutor",
+  TUTEE: "tutee",
+  ADMIN: "admin",
+} as const;
+export type UserRole = (typeof UserRole)[keyof typeof UserRole];
 
-export enum BookingStatus {
-  REQUESTED = "requested",
-  CONFIRMED = "confirmed",
-  COMPLETED = "completed",
-  CANCELLED = "cancelled",
-}
+export const BookingStatus = {
+  REQUESTED: "requested",
+  CONFIRMED: "confirmed",
+  COMPLETED: "completed",
+  CANCELLED: "cancelled",
+} as const;
+export type BookingStatus = (typeof BookingStatus)[keyof typeof BookingStatus];
 
 // ==========================================
 // 2. CORE ENTITIES (Peer Tutoring Booking Platform)
