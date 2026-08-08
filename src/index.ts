@@ -15,7 +15,6 @@ import {
   type BookingDictionary,
 } from '../types';
 
-// Demonstration of Part 1 & Peer Tutoring Platform entities
 const mockUsers: User[] = [
   {
     id: 1,
@@ -80,19 +79,15 @@ const mockBookings: Booking[] = [
   },
 ];
 
-// Log unused mocks to satisfy noUnusedLocals
 console.log('Mock Courses:', mockCourses);
 console.log('Mock Submissions:', mockSubmissions);
 
-// 1. Generic function demonstration: getById
 const foundUser = getById(mockUsers, 1);
 console.log('Found User (getById):', foundUser);
 
-// 2. Generic function demonstration: getFirst
 const firstSession = getFirst(mockSessions);
 console.log('First Session (getFirst):', firstSession);
 
-// 3. Generic Interface demonstration: ApiResponse<T>
 const userApiResponse: ApiResponse<User> = {
   status: 'success',
   data: mockUsers[0],
@@ -106,7 +101,6 @@ const bookingsApiResponse: ApiResponse<Booking[]> = {
 };
 console.log('Bookings API Response:', bookingsApiResponse);
 
-// 4. Utility Type usage examples
 const userUpdate: UpdateUserDto = {
   bio: 'Updated bio: Peer tutor for CS & IT courses.',
 };
